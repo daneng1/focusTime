@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Text, SafeAreaView, StyleSheet } from 'react-native';
 import { Focus } from './src/features/focus/Focus';
-import Constants from 'expo-constants';
+// import Constants from 'expo-constants';
 import { colors } from './src/utils/colors';
 import { Timer } from './src/features/timer/timer';
 
