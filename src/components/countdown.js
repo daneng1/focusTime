@@ -6,7 +6,11 @@ import { colors } from '../utils/colors';
 
 const minutesToMillis = (min) => min * 1000 * 60;
 const formatTime = (time) => (time < 10 ? `0${time}` : time);
-export const Countdown = ({ minutes = 20, isPaused }) => {
+
+export const Countdown = ({ 
+  minutes = 20, 
+  isPaused = true,
+  }) => {
   const interval = React.useRef(null);
 
   const countdown = () => {
@@ -21,11 +25,14 @@ export const Countdown = ({ minutes = 20, isPaused }) => {
     });
   };
 
-  // useEffect(() => {
-  //   interval.current = setInterval(countdown, 1000);
+  useEffect(() => {
+    if(isPaused) {
+      return;
+    }
+    interval.current = setInterval(countdown, 1000);
 
-  //   return () => clearInterval(interval.current);
-  // }, [])
+    return () => clearInterval(interval.current);
+  }, [isPaused])
 
   const [millis, setMillis] = useState(minutesToMillis(minutes));
 
@@ -44,7 +51,11 @@ const styles = StyleSheet.create({
     fontSize: fontSizes.xxxl,
     fontWeight: 'bold',
     color: colors.white,
-    padding: spacing.lg,
+    width: 300,
+    justifyContent: 'center',
+    textAlign: 'center',
+    // paddingLeft: spacing.xxl,
+    // paddingRight: spacing.xxl,
     backgroundColor: 'rgba(94, 132, 226, 0.3)',
   },
 });
