@@ -32,5 +32,3 @@ const styles = (size) =>
     },
     text: { color: colors.white, fontSize: fontSizes.lg },
   });
-
-// check that the code fot styles is correct.

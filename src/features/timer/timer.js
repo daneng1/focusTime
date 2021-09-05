@@ -11,10 +11,10 @@ import { useKeepAwake } from 'expo-keep-awake';
 import { colors } from '../../utils/colors';
 import { fontSizes, spacing } from '../../utils/sizes';
 
-export const Timer = ({ focusSubject, removeSubject }) => {
+export const Timer = ({ focusSubject, removeSubject, clearSubject, onTimerEnd }) => {
   useKeepAwake();
 
-  const DEFAULT_TIME = 0.1;
+  const DEFAULT_TIME = 0.2;
   const [minutes, setMinutes] = useState(DEFAULT_TIME);
   const [isStarted, setIsStarted] = useState(false);
   const [progress, setProgress] = useState(1);
@@ -33,10 +33,10 @@ export const Timer = ({ focusSubject, removeSubject }) => {
   const onEnd = () => {
     vibrate();
     setCompleted(true);
+    onTimerEnd(minutes);
     setMinutes(DEFAULT_TIME);
     setIsStarted(false);
     setProgress(1);
-    // removeSubject(null);
   };
 
   // TODO: vibrate not working
@@ -102,6 +102,13 @@ export const Timer = ({ focusSubject, removeSubject }) => {
               />
             )}
           </View>
+            <View style={styles.cleaSubject}>
+              <RoundedButton
+                title="Clear"
+                size={50}
+                onPress={() => clearSubject()}
+              />
+            </View>
         </View>
       )}
     </View>
@@ -151,4 +158,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  clearSubject: {
+
+  }
 });
