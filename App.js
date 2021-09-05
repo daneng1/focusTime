@@ -6,16 +6,15 @@ import { colors } from './src/utils/colors';
 import { Timer } from './src/features/timer/timer';
 
 export default function App() {
-  const [focusSubject, setFocusSubject] = useState('gardening');
+  const [focusSubject, setFocusSubject] = useState(null);
 
   return (
     <SafeAreaView style={styles.container}>
       {focusSubject ? (
-        <Timer focusSubject={focusSubject}/>
+        <Timer focusSubject={focusSubject} removeSubject={setFocusSubject} />
       ) : (
         <Focus addSubject={setFocusSubject} />
       )}
-      <Text>{focusSubject}</Text>
     </SafeAreaView>
   );
 }
