@@ -31,7 +31,6 @@ export const Countdown = ({ minutes = 1, isPaused, onProgress, onEnd }) => {
       return;
     }
     interval.current = setInterval(countdown, 1000);
-
     return () => clearInterval(interval.current);
   }, [isPaused]);
 

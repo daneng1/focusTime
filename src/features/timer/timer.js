@@ -1,21 +1,24 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Text, Vibration, Platform } from 'react-native';
+import { TouchableOpacity, View, StyleSheet, Text, Vibration, Platform } from 'react-native';
+import ConfettiCannon from 'react-native-confetti-cannon';
+
 import { Countdown } from '../../components/countdown';
 import { ProgressBar } from 'react-native-paper';
 import { RoundedButton } from '../../components/roundedButton';
 import { Timing } from './Timing.js';
-import {useKeepAwake} from 'expo-keep-awake';
+import { useKeepAwake } from 'expo-keep-awake';
 
 import { colors } from '../../utils/colors';
 import { fontSizes, spacing } from '../../utils/sizes';
 
-export const Timer = ({ focusSubject }) => {
+export const Timer = ({ focusSubject, removeSubject }) => {
   useKeepAwake();
-  
-  const DEFAULT_TIME = 0.2;
+
+  const DEFAULT_TIME = 0.1;
   const [minutes, setMinutes] = useState(DEFAULT_TIME);
   const [isStarted, setIsStarted] = useState(false);
   const [progress, setProgress] = useState(1);
+  const [completed, setCompleted] = useState(false);
 
   const onProgress = (progress) => {
     setProgress(progress);
@@ -25,60 +28,82 @@ export const Timer = ({ focusSubject }) => {
     setMinutes(min);
     setProgress(1);
     setIsStarted(false);
-  }
+  };
 
   const onEnd = () => {
     vibrate();
+    setCompleted(true);
     setMinutes(DEFAULT_TIME);
     setIsStarted(false);
     setProgress(1);
-  }
+    // removeSubject(null);
+  };
 
   // TODO: vibrate not working
   const vibrate = () => {
-    if(Platform.OS  === 'ios') {
-      const interval = setInterval(() => Vibration.vibrate(), 1000)
-      setTimeout(() => clearInterval(interval, 10000))
+    if (Platform.OS === 'ios') {
+      const interval = setInterval(() => Vibration.vibrate(), 1000);
+      setTimeout(() => clearInterval(interval, 10000));
     } else {
       Vibration.vibrate(10000);
     }
+  };
+
+  const clearScreen = () => {
+    setCompleted(false);
+    removeSubject(null);
   }
 
   return (
-    <View style={styles.container}>
-      <View style={styles.countdown}>
-        <Countdown 
-        minutes={minutes}
-        isPaused={!isStarted} 
-        onProgress={onProgress} 
-        onEnd={onEnd}
-        />
-      </View>
-      <View style={{ padding: spacing.xl }}>
-        <Text style={styles.title}>Focusing on: </Text>
-        <Text style={styles.task}>{focusSubject}</Text>
-      </View>
-      <View style={styles.progressBar}>
-        <ProgressBar progress={progress} />
-      </View>
-      <View style={styles.buttonWrapper}>
-        <Timing onChangeTime={changeTime} />
-      </View>
-      <View style={styles.buttonWrapper}>
-        {isStarted ? (
-          <RoundedButton
-            title="Pause"
-            size={100}
-            onPress={() => setIsStarted(false)}
-          />
-        ) : (
-          <RoundedButton
-            title="Start"
-            size={100}
-            onPress={() => setIsStarted(true)}
-          />
-        )}
-      </View>
+    <View>
+      {completed ? (
+        <View style={styles.container}>
+          <ConfettiCannon 
+            style={styles.cannon} 
+            fadeOut={true} 
+            count={200} 
+            origin={{x: -100, y: -100}}/>
+        <TouchableOpacity onPress={() => clearScreen()}>
+          <Text style={styles.completed}>Yay, you did it!!</Text>
+        </TouchableOpacity>
+        </View>
+      ) : (
+        <View style={styles.container}>
+          <View style={styles.countdown}>
+            <Countdown
+              minutes={minutes}
+              isPaused={!isStarted}
+              onProgress={onProgress}
+              onEnd={onEnd}
+            />
+          </View>
+          <View style={{ padding: spacing.xl }}>
+            <Text style={styles.title}>Focusing on: </Text>
+            <Text style={styles.task}>{focusSubject}</Text>
+          </View>
+          <View>
+            <ProgressBar style={styles.progressBar} progress={progress} />
+          </View>
+          <View style={styles.buttonWrapper}>
+            <Timing onChangeTime={changeTime} />
+          </View>
+          <View style={styles.buttonWrapper}>
+            {isStarted ? (
+              <RoundedButton
+                title="Pause"
+                size={100}
+                onPress={() => setIsStarted(false)}
+              />
+            ) : (
+              <RoundedButton
+                title="Start"
+                size={100}
+                onPress={() => setIsStarted(true)}
+              />
+            )}
+          </View>
+        </View>
+      )}
     </View>
   );
 };
@@ -109,8 +134,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   progressBar: {
-    color: colors.white,
+    borderRadius: 10,
+    backgroundColor: colors.darkBlue,
     height: 20,
+    zIndex: -1,
     marginTop: spacing.md,
+  },
+  completed: {
+    color: colors.white,
+    fontWeight: 'bold',
+    fontSize: fontSizes.lg,
+    textAlign: 'center',
+    justifyContent: 'center',
+  },
+  cannon: {
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
