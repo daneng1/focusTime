@@ -3,6 +3,7 @@ import { Text, View, StyleSheet } from 'react-native';
 import { TextInput } from 'react-native-paper';
 import { RoundedButton } from '../../components/roundedButton';
 
+
 import { fontSizes, spacing } from '../../utils/sizes';
 
 export const Focus = ({ addSubject }) => {
@@ -26,6 +27,9 @@ export const Focus = ({ addSubject }) => {
             onPress={() => addSubject(focusItem)}
           />
         </View>
+
+
+
       </View>
     </View>
   );
