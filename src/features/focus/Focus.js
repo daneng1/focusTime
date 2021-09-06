@@ -27,9 +27,6 @@ export const Focus = ({ addSubject }) => {
             onPress={() => addSubject(focusItem)}
           />
         </View>
-
-
-
       </View>
     </View>
   );

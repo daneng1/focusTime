@@ -3,7 +3,7 @@ import {
   View,
   StyleSheet,
   Text,
-  Flatlist,
+  FlatList,
   SafeAreaView
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -22,6 +22,21 @@ export const FocusHistory = ({ focusHistory, setFocusHistory }) => {
     <>
       <SafeAreaView style={styles.container}>
         <Text style={styles.title}>Focus History</Text>
+        {!!focusHistory.length && (
+          <>
+          <FlatList
+            style={{ width: "100%", height: "100%", paddingTop: 16 }}
+            contentContainerStyle={{ alignItems: "center" }}
+            data={focusHistory}
+            renderItem={({ item, index }) => (
+              <Text style={styles.historyItem(item.status)}>
+                {item.subject} - {item.minutes} min
+              </Text>
+            )}
+          />
+          <RoundedButton size={75} title="Clear" onPress={() => clearHistory()}/>
+          </>
+        )}
       </SafeAreaView>
     </>
   )
@@ -29,12 +44,16 @@ export const FocusHistory = ({ focusHistory, setFocusHistory }) => {
 
 const styles=StyleSheet.create({
   container: {
-    // flex: .5,
+    flex: .5,
     alignItems: 'center',
-    // marginTop: spacing.lg
   },
   title: {
+    fontSize: fontSizes.xl,
+    color: colors.white,
+    marginTop: -100,
+  },
+  historyItem:(status) => ({
+    color: status === 1 ? 'green' : 'red',
     fontSize: fontSizes.lg,
-    color: colors.white
-  }
+  })
 })
