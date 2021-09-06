@@ -14,7 +14,7 @@ import { fontSizes, spacing } from '../../utils/sizes';
 export const Timer = ({ focusSubject, removeSubject, clearSubject, onTimerEnd }) => {
   useKeepAwake();
 
-  const DEFAULT_TIME = 0.2;
+  const DEFAULT_TIME = 0.05;
   const [minutes, setMinutes] = useState(DEFAULT_TIME);
   const [isStarted, setIsStarted] = useState(false);
   const [progress, setProgress] = useState(1);
