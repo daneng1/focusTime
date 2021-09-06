@@ -11,7 +11,7 @@ import { useKeepAwake } from 'expo-keep-awake';
 import { colors } from '../../utils/colors';
 import { fontSizes, spacing } from '../../utils/sizes';
 
-export const Timer = ({ focusSubject, removeSubject, clearSubject, onTimerEnd }) => {
+export const Timer = ({ focusSubject, clearSubject, onTimerEnd }) => {
   useKeepAwake();
 
   const DEFAULT_TIME = 0.05;
@@ -51,7 +51,6 @@ export const Timer = ({ focusSubject, removeSubject, clearSubject, onTimerEnd })
 
   const clearScreen = () => {
     setCompleted(false);
-    removeSubject(null);
   }
 
   return (
