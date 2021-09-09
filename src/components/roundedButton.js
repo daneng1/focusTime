@@ -27,8 +27,11 @@ const styles = (size) =>
       height: size,
       alignItems: 'center',
       justifyContent: 'center',
-      borderColor: '#fff',
+      borderColor: colors.black,
       borderWidth: 2,
     },
-    text: { color: colors.white, fontSize: size / 3 },
+    text: { 
+      color: colors.white, 
+      fontSize: size / 3,
+      }
   });

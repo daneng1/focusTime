@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { TouchableOpacity, View, StyleSheet, Text, Vibration, Platform } from 'react-native';
-import ConfettiCannon from 'react-native-confetti-cannon';
 
 import { Countdown } from '../../components/countdown';
-import { ProgressBar } from 'react-native-paper';
+import { ProgressBar, Colors } from 'react-native-paper';
 import { RoundedButton } from '../../components/roundedButton';
 import { Timing } from './Timing.js';
 import { useKeepAwake } from 'expo-keep-awake';
@@ -14,7 +13,7 @@ import { fontSizes, spacing } from '../../utils/sizes';
 export const Timer = ({ focusSubject, clearSubject, onTimerEnd }) => {
   useKeepAwake();
 
-  const DEFAULT_TIME = 0.05;
+  const DEFAULT_TIME = .05;
   const [minutes, setMinutes] = useState(DEFAULT_TIME);
   const [isStarted, setIsStarted] = useState(false);
   const [progress, setProgress] = useState(1);
@@ -57,11 +56,6 @@ export const Timer = ({ focusSubject, clearSubject, onTimerEnd }) => {
     <View>
       {completed ? (
         <View style={styles.container}>
-          <ConfettiCannon 
-            style={styles.cannon} 
-            fadeOut={true} 
-            count={200} 
-            origin={{x: -100, y: -100}}/>
         <TouchableOpacity onPress={() => clearScreen()}>
           <Text style={styles.completed}>Yay, you did it!!</Text>
         </TouchableOpacity>
@@ -81,7 +75,7 @@ export const Timer = ({ focusSubject, clearSubject, onTimerEnd }) => {
             <Text style={styles.task}>{focusSubject}</Text>
           </View>
           <View>
-            <ProgressBar style={styles.progressBar} progress={progress} />
+            <ProgressBar style={styles.progressBar} color={colors.black} progress={progress} />
           </View>
           <View style={styles.buttonWrapper}>
             <Timing onChangeTime={changeTime} />
@@ -141,7 +135,6 @@ const styles = StyleSheet.create({
   },
   progressBar: {
     borderRadius: 10,
-    backgroundColor: colors.darkBlue,
     height: 20,
     zIndex: -1,
     marginTop: spacing.md,
@@ -153,11 +146,4 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     justifyContent: 'center',
   },
-  cannon: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  clearSubject: {
-
-  }
 });

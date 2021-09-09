@@ -56,6 +56,6 @@ const styles = StyleSheet.create({
     width: 300,
     justifyContent: 'center',
     textAlign: 'center',
-    backgroundColor: 'rgba(94, 132, 226, 0.3)',
+    backgroundColor: 'rgba(255, 255, 255, 0.5)',
   },
 });

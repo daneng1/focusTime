@@ -7,10 +7,11 @@ export const Timing = ({ onChangeTime }) => {
   return (
     <>
       <View style={styles.timingButton}>
-        <RoundedButton size={75} title="5" onPress={() => onChangeTime(5)} />
-        <RoundedButton size={75} title="10" onPress={() => onChangeTime(10)} />
-        <RoundedButton size={75} title="20" onPress={() => onChangeTime(20)} />
-        <RoundedButton size={75} title="30" onPress={() => onChangeTime(30)} />
+        <RoundedButton size={60} title="1" onPress={() => onChangeTime(1)} />
+        <RoundedButton size={60} title="5" onPress={() => onChangeTime(5)} />
+        <RoundedButton size={60} title="10" onPress={() => onChangeTime(10)} />
+        <RoundedButton size={60} title="20" onPress={() => onChangeTime(20)} />
+        <RoundedButton size={60} title="30" onPress={() => onChangeTime(30)} />
       </View>
     </>
   );

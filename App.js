@@ -18,8 +18,6 @@ import { uuidv4 } from './src/utils/uuid';
 export default function App() {
   const [focusSubject, setFocusSubject] = useState(null);
   const [focusHistory, setFocusHistory] = useState([
-    // {subject:"Finish app",status:1,minutes:0.05,key:"5e3fdedc-e495-45e7-8b34-f2c948152f88"},
-    // {subject:"Complete tasks",status:2,minutes:0,key:"1b11dcaf-8835-4a60-91b6-1abb38045d5e"}
   ]);
   const [isLoading, setIsLoading] = useState(true);
 
