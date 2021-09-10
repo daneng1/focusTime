@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   View,
   Text,
   SafeAreaView,
   StyleSheet,
   AsyncStorage,
-  ActivityIndicator
+  ActivityIndicator, 
+  Animated
 } from 'react-native';
 import { Focus } from './src/features/focus/Focus';
 import { FocusHistory } from './src/features/focus/FocusHistory';
@@ -25,12 +26,23 @@ export default function App() {
     setFocusHistory([...focusHistory, { subject, status, minutes, key: uuidv4() }]);
   };
 
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+
+  const fadeIn = () => {
+    // Will change fadeAnim value to 1 in 5 seconds
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 500,
+    }).start();
+  };
+
   const STATUS = {
     COMPLETE: 1,
     CANCELLED: 2,
   };
 
   useEffect(() => {
+    fadeIn();
     const interval = setInterval(() => setIsLoading(false), 2000)
   }, [])
 
